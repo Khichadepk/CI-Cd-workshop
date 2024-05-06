@@ -48,21 +48,26 @@ jobs:
         id: build-and-push
         with:
           push: true
-          tags: poonamkhichade720/app:latest
+          tags: poonamkhichade720/app:latest1
 
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3.5.0
+
+      - name: Generate Cosign Key Pair
+        run: cosign generate-key-pair
         
-      - name: Sign the images with GitHub OIDC Token1
-        env:
-          DIGEST: ${{ steps.build-and-push.outputs.digest }}
-          TAGS: poonamkhichade720/app:latest
+      - name: Sign image with a key
         run: |
           images=""
           for tag in ${TAGS}; do
             images+="${tag}@${DIGEST} "
           done
-          cosign sign --yes ${images}
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${images}
+        env:
+          TAGS: poonamkhichade720/app:latest1
+          COSIGN_PRIVATE_KEY: POONAM_COSIGN_PRIVATE_KEY
+          COSIGN_PASSWORD: POONAM_COSIGN_PASSWORD
+          DIGEST: ${{ steps.build-and-push.outputs.digest }}
           
              
           
