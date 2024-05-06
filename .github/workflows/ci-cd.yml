@@ -42,24 +42,15 @@ jobs:
         with:
           username: poonamkhichade720
           password: PoonamK123*
-      -
-        name: Build and push
-        uses: docker/build-push-action@v5
+      
+      - name: Build and Push container images
+        uses: docker/build-push-action@v4.0.0
+        id: build-and-push
         with:
           push: true
           tags: poonamkhichade720/app:latest
-  docker-sign:
-    runs-on: ubuntu-latest
 
-    permissions: {}
-
-    name: Install Cosign
-    steps:
-      - name: Install Cosign
-        uses: sigstore/cosign-installer@v3.5.0
-      - name: Check install!
-        run: cosign version
-
+     
       - name: Sign image with a key
         run: |
           images=""
@@ -68,9 +59,9 @@ jobs:
           done
           cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${images}
         env:
-          TAGS: ${{ steps.docker_meta.outputs.tags }}
+          TAGS: poonamkhichade720/app:latest
           COSIGN_PRIVATE_KEY: POONAM_COSIGN_PRIVATE_KEY
-          COSIGN_PASSWORD: POONAM.COSIGN_PASSWORD
+          COSIGN_PASSWORD: POONAM_COSIGN_PASSWORD
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
           
              
