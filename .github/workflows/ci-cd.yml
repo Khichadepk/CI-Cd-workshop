@@ -65,7 +65,7 @@ jobs:
 
       - name: Sign Docker image with Cosign
         run: |
-             cosign sign -key ~/.cosign/cosign.key user/app:latest
+             cosign sign -key ~/.cosign/cosign.key poonamkhichade720/app:latest
              
           
         
