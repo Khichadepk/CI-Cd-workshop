@@ -1,0 +1,41 @@
+name: Go Security Scan
+
+on:
+  push:
+    branches:
+      - main
+      - 'releases/**'
+      - 'branch1'
+
+jobs:
+  security_scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.16' # Set the Go version you are using
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          severity: 'CRITICAL'
+          format: 'table' # Output format (optional)
+
+      - name: Build and push docker image
+        uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          dockerfile: go-fortune/Dockerfile  # Path to the Dockerfile in the subfolder
+          image: poonamkhichade720/ci-cdworkshop
+          registry: docker.io
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          tags: branch1-${{ github.sha }}
+
+
