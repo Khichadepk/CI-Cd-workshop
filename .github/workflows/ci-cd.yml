@@ -59,19 +59,12 @@ jobs:
       - name: Generate Cosign Key Pair
         run: cosign generate-key-pair
 
-      - name: Send custom JSON data to Slack workflow
+      - name: Send GitHub Action trigger data to Slack workflow
         id: slack
         uses: slackapi/slack-github-action@v1.26.0
-        with:
-          # This data can be any valid JSON from a previous step in the GitHub Action
-          payload: |
-            {
-              "Name": "Poonam Khichade",
-              "Email": "bar"
-            }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}  
-      
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        
           
              
           
