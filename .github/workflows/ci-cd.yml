@@ -27,7 +27,7 @@ jobs:
           ignore-unfixed: true
           severity: 'CRITICAL'
           format: 'table' # Output format (optional)
-  docker:
+  docker-image:
     runs-on: ubuntu-latest
     steps:
       -
@@ -48,4 +48,15 @@ jobs:
         with:
           push: true
           tags: poonamkhichade720/app:latest
-  
+  docker-sign:
+    runs-on: ubuntu-latest
+
+    permissions: {}
+
+    name: Install Cosign
+    steps:
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3.5.0
+      - name: Check install!
+        run: cosign version
+        
