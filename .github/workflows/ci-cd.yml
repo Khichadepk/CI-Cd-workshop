@@ -14,62 +14,56 @@ jobs:
     permissions:
       contents: read
       packages: write
-      id-token: write
-    
+      id-token: write # needed for signing the images with GitHub OIDC Token
+
+  
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
-      - name: Set up Go
-        uses: actions/setup-go@v2
+      - uses: actions/checkout@v3.5.2
         with:
-          go-version: '1.16' # Set the Go version you are using
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          ignore-unfixed: true
-          severity: 'CRITICAL'
-          format: 'table' # Output format (optional)
-
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      -
-        name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: poonamkhichade720
-          password: PoonamK123*
-      
-      - name: Build and Push container images
-        uses: docker/build-push-action@v4.0.0
-        id: build-and-push
-        with:
-          push: true
-          tags: poonamkhichade720/app:latest1
+          fetch-depth: 1
 
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3.5.0
 
-      - name: Generate Cosign Key Pair
-        run: cosign generate-key-pair
-        
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2.1.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2.5.0
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: docker_meta
+        uses: docker/metadata-action@v4.4.0
+        with:
+          images: ghcr.io/sigstore/sample-honk
+          tags: type=sha,format=long
+
+      - name: Build and Push container images
+        uses: docker/build-push-action@v4.0.0
+        id: build-and-push
+        with:
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          push: true
+          tags: ${{ steps.docker_meta.outputs.tags }}
+
+      # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
       - name: Sign image with a key
         run: |
           images=""
           for tag in ${TAGS}; do
             images+="${tag}@${DIGEST} "
           done
-          cosign sign --yes --key cosign.key ${images}
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${images}
         env:
-          TAGS: poonamkhichade720/app:latest1
-          COSIGN_PRIVATE_KEY: POONAM_COSIGN_PRIVATE_KEY
-          COSIGN_PASSWORD: POONAM_COSIGN_PASSWORD
+          TAGS: ${{ steps.docker_meta.outputs.tags }}
+          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
           
              
