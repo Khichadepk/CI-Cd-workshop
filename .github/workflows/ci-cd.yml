@@ -54,7 +54,7 @@ jobs:
         uses: sigstore/cosign-installer@v3.5.0
 
       - name: Generate Cosign Key Pair
-        run: cosign generate-key-pair
+        run: cosign generate-key-pair --key ~/.cosign/cosign.key
         
       - name: Sign image with a key
         run: |
@@ -62,7 +62,7 @@ jobs:
           for tag in ${TAGS}; do
             images+="${tag}@${DIGEST} "
           done
-          cosign sign --yes --key cosign.key ${images}
+          cosign sign --yes --key ~/.cosign/cosign.key ${images}
         env:
           TAGS: poonamkhichade720/app:latest1
           COSIGN_PRIVATE_KEY: POONAM_COSIGN_PRIVATE_KEY
