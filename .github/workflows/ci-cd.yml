@@ -28,14 +28,11 @@ jobs:
           severity: 'CRITICAL'
           format: 'table' # Output format (optional)
 
-      - name: Build and push docker image
-        uses: mr-smithers-excellent/docker-build-push@v4
-        with:
-          dockerfile: Dockerfile  # Path to the Dockerfile in the subfolder
-          image: poonamkhichade720/ci-cdworkshop
-          registry: docker.io
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          tags: branch1-${{ github.sha }}
-
-
+      - name: Build Docker Image
+        run: docker build -t myorg/my-golang-app:${{ github.sha }} .
+      
+      - name: Push to Docker Hub
+        if: success()
+        run: |
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+          docker push myorg/my-golang-app:${{ github.sha }}
