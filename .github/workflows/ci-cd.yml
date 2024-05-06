@@ -11,6 +11,11 @@ jobs:
   security_scan:
     name: Security Scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,9 +32,7 @@ jobs:
           ignore-unfixed: true
           severity: 'CRITICAL'
           format: 'table' # Output format (optional)
-  docker-image:
-    runs-on: ubuntu-latest
-    steps:
+
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -54,7 +57,7 @@ jobs:
         uses: sigstore/cosign-installer@v3.5.0
 
       - name: Generate Cosign Key Pair
-        run: cosign generate-key-pair --key ~/.cosign/cosign.key
+        run: cosign generate-key-pair
         
       - name: Sign image with a key
         run: |
@@ -62,7 +65,7 @@ jobs:
           for tag in ${TAGS}; do
             images+="${tag}@${DIGEST} "
           done
-          cosign sign --yes --key ~/.cosign/cosign.key ${images}
+          cosign sign --yes --key cosign.key ${images}
         env:
           TAGS: poonamkhichade720/app:latest1
           COSIGN_PRIVATE_KEY: POONAM_COSIGN_PRIVATE_KEY
