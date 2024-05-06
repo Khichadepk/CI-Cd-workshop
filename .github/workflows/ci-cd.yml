@@ -38,4 +38,4 @@ jobs:
           DOCKER_PASSWORD: PoonamK123*
         run: |
           echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-          docker push myorg/my-golang-app:${{ github.sha }}
+          docker push PoonamK123*/ci-cdworkshop:${{ github.sha }}
