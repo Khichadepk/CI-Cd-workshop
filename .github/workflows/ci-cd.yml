@@ -65,7 +65,8 @@ jobs:
 
       - name: Sign Docker image with Cosign
         run: |
-             cosign sign -key cosign.key poonamkhichade720/app:latest
+          export COSIGN_PASSWORD=poonam_cosign_password
+          cosign sign -key cosign.key poonamkhichade720/app:latest
              
           
         
