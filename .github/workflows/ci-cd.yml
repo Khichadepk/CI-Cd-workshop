@@ -65,7 +65,6 @@ jobs:
           status: starting
           channel: '#test-submission'
           message: Starting Deployment...
-        if: always()
         env:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
