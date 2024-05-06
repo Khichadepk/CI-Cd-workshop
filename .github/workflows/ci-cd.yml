@@ -66,8 +66,8 @@ jobs:
           # This data can be any valid JSON from a previous step in the GitHub Action
           payload: |
             {
-              "key": "Name",
-              "foo": "bar"
+              "Name": "Poonam Khichade",
+              "Email": "bar"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}  
