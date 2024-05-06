@@ -34,8 +34,8 @@ jobs:
       - name: Push to Docker Hub
         if: success()
         env:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+          DOCKER_USERNAME: poonamkhichade720
+          DOCKER_PASSWORD: PoonamK123*
         run: |
           echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
           docker push myorg/my-golang-app:${{ github.sha }}
