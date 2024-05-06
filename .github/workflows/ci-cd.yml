@@ -60,13 +60,19 @@ jobs:
       - name: Check install!
         run: cosign version
 
-      - name: Generate Cosign Key Pair
-        run: cosign generate-key-pair
-
-      - name: Sign Docker image with Cosign
+      - name: Sign image with a key
         run: |
-          export COSIGN_PASSWORD=poonam_cosign_password
-          cosign sign -key cosign.key poonamkhichade720/app:latest
+          images=""
+          for tag in ${TAGS}; do
+            images+="${tag}@${DIGEST} "
+          done
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${images}
+        env:
+          TAGS: ${{ steps.docker_meta.outputs.tags }}
+          COSIGN_PRIVATE_KEY: POONAM_COSIGN_PRIVATE_KEY
+          COSIGN_PASSWORD: POONAM.COSIGN_PASSWORD
+          DIGEST: ${{ steps.build-and-push.outputs.digest }}
+          
              
           
         
