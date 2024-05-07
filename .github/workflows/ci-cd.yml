@@ -30,9 +30,9 @@ jobs:
         with:
           scan-type: 'fs'
           ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
+          severity: 'HIGH'
           format: 'table' # Output format (optional)
-          output: 'trivy-report.txt'
+          
 
       -
         name: Set up QEMU
@@ -60,14 +60,7 @@ jobs:
       - name: Generate Cosign Key Pair
         run: cosign generate-key-pair
 
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: test-submission
-          SLACK_MESSAGE: "*Name*: Poonam Khichade\n*Metriculation*: A0290885M\n*Email*: e1327916@u.nus.edu\n*Git*: https://github.com/${{ github.repository }}\n*Image* : https://hub.docker.com/repository/docker/${{ secrets.DOCKERHUB_USERNAME }}/app/general"
-          SLACK_TITLE: "*Image build and Signed*"
-          SLACK_USERNAME: Poonam Khichade
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+      
             
         
           
