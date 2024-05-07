@@ -48,7 +48,7 @@ jobs:
           output : 'trivy-report.txt'
      
       - name: Slack Notification
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main1'
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: test-submission
@@ -60,7 +60,7 @@ jobs:
 
       - name: 'Exit if vulnerability'
         run: |
-          if [[ 1 == 1 ]]; then
+          if [[ 1 == 2 ]]; then
             echo "vulnerability found in code."
             exit 1
           fi
