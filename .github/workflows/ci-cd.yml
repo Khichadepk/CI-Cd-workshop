@@ -46,7 +46,13 @@ jobs:
           severity: 'HIGH'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
-     
+
+      - name: Extract Vulnerability Count
+        run: |
+          echo "${{ steps.trivy.outputs.scan-results }}
+          exit 1;
+          
+          
       - name: Slack Notification
         if: github.ref == 'refs/heads/main1'
         uses: rtCamp/action-slack-notify@v2
