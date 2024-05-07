@@ -46,18 +46,6 @@ jobs:
           severity: 'HIGH'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
-
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: test-submission
-          SLACK_MESSAGE: "*Name*: Poonam Khichade\n*Metriculation*: A0290885M\n*Email*: e1327916@u.nus.edu\n*Git*: https://github.com/${{ github.repository }}\n*Image* : https://hub.docker.com/repository/docker/${{ secrets.DOCKERHUB_USERNAME }}/app/general"
-          SLACK_TITLE: "*Image build and Signed*"
-          SLACK_USERNAME: Poonam Khichade
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_FILE_UPLOAD: trivy-report.txt
-          SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -78,7 +66,7 @@ jobs:
           push: true
           tags: poonamkhichade720/app:latest1
 
-      - name: Sign image with a key
+      - name: Sign image with a key1
         run: |
           images=""
           for tag in ${TAGS}; do
