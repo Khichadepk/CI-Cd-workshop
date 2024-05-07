@@ -64,7 +64,7 @@ jobs:
         id: build-and-push
         with:
           push: true
-          tags: poonamkhichade720/app:latest1
+          tags: poonamkhichade720/app:latest
 
       - name: Sign image with a key1
         run: |
@@ -72,12 +72,12 @@ jobs:
           for tag in ${TAGS}; do
             images+="${tag}@${DIGEST} "
           done
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY https://hub.docker.com/layers/poonamkhichade720/app/latest1/images/sha256-b0a54a59a00deb78ee342c15e3218dc807e2101f976634c82e9631d3c59ce2d8?context=repo
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${images}
         env:
           TAGS: latest1
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-          DIGEST: sha256:18902d34dc2a70f03ac537c4299ce8a7f035b65e1e17e9fd3c836c505bc8eabd
+          DIGEST: ${{ steps.build-and-push.outputs.digest }}
 
       
             
