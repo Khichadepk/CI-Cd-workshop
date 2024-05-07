@@ -50,6 +50,7 @@ jobs:
           SLACK_USERNAME: Poonam Khichade
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_FILE_UPLOAD: trivy-report.txt
+          SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           
       -
         name: Set up QEMU
