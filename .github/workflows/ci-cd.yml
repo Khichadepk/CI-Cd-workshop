@@ -49,8 +49,8 @@ jobs:
 
       - name: Extract Vulnerability Count
         run: |
-          echo ${{ steps.trivy.outputs.exit_code }}
-          echo steps.trivy.outputs.exit_code
+          echo ${{ steps.trivy.outputs }}
+          echo steps.trivy.outputs
           
           exit 1;
           
