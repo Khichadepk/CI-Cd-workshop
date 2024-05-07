@@ -49,11 +49,19 @@ jobs:
      
       - name: 'Check scan output'
         run: |
-          if [[ 1 == 1 ]];
+          if [[ 1 == 2 ]];
           then
             echo "No vulnerability found in scan."
           else 
             echo "vulnerability found in scan"
+            rtCamp/action-slack-notify@v2
+            env:
+            SLACK_CHANNEL: test-submission
+            SLACK_TITLE: "*Image build and Signed*"
+            SLACK_USERNAME: Poonam Khichade
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+            SLACK_FILE_UPLOAD: trivy-report.txt
+            SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
             exit 1
           fi
 
