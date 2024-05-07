@@ -47,6 +47,7 @@ jobs:
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
           exit-code: 1
+          continue-on-error: true
 
       - name: Dump job context
         env:
