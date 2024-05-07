@@ -77,7 +77,7 @@ jobs:
           TAGS: latest1
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-          DIGEST: ${{ steps.build-and-push.outputs.digest }}
+          DIGEST: sha256:18902d34dc2a70f03ac537c4299ce8a7f035b65e1e17e9fd3c836c505bc8eabd
 
       
             
