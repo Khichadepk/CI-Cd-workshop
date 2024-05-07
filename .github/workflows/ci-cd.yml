@@ -46,6 +46,12 @@ jobs:
           severity: 'HIGH'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
+     
+      - name: The demo step has failed
+        if: ${{ failure() }}
+        run: echo failed
+             exit 1
+       
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
