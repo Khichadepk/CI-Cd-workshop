@@ -49,7 +49,7 @@ jobs:
 
       - name: Extract Vulnerability Count
         run: |
-          echo "ABC: ${{ steps.trivy.outputs.result }}"
+          echo "ABC: ${{ steps.trivy.outputs }}"
           exit 1;
           
           
