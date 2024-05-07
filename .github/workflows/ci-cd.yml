@@ -60,7 +60,7 @@ jobs:
 
       - name: 'Exit if vulnerability'
         run: |
-          if [[ "github.ref == 'refs/heads/main' ]]; then
+          if [[ 1 == 1 ]]; then
             echo "vulnerability found in code."
             exit 1
           fi
