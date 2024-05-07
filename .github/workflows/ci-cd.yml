@@ -54,7 +54,8 @@ jobs:
             echo "No vulnerability found in scan."
           else 
             echo "vulnerability found in scan"
-            rtCamp/action-slack-notify@v2
+            - name: 'send report to slack'
+            uses: rtCamp/action-slack-notify@v2
             env:
             SLACK_CHANNEL: test-submission
             SLACK_TITLE: "*Image build and Signed*"
