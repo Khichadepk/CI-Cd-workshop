@@ -1,4 +1,4 @@
-name: Go Security Scan
+name: Build and Push
 
 on:
   push:
@@ -63,8 +63,8 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: test-submission
-          SLACK_MESSAGE: 'Slack test message'
-          SLACK_TITLE: "Slack Title"
+          SLACK_MESSAGE: "*Name : Poonam Khichade*"
+          SLACK_TITLE: "*Image build and Signed*"
           SLACK_USERNAME: Poonam Khichade
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
             
