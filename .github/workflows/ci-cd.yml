@@ -44,7 +44,7 @@ jobs:
         continue-on-error: true
         with:
           scan-type: 'fs'
-          severity: 'HIGH'
+          severity: 'CRITICAL'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
           exit-code: 1
@@ -68,7 +68,6 @@ jobs:
           SLACK_MESSAGE: 'Failed trivy scan, see uploaded report'
           SLACK_USERNAME: Poonam Khichade
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_CUSTOM_PAYLOAD: '{"text": "Hello, World!"}'
           SLACK_FILE_UPLOAD: trivy-report.txt
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           
