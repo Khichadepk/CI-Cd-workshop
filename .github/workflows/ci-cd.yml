@@ -40,7 +40,15 @@ jobs:
           severity: 'HIGH'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
-       
+
+      - name: Upload Trivy scan result to slack
+        uses: MeilCli/slack-upload-file@v4
+        with:
+          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          file_path: '*.txt'
+          initial_comment: 'post by slack-upload-file'
+          
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
