@@ -43,7 +43,7 @@ jobs:
         id: trivy
         with:
           scan-type: 'fs'
-          severity: 'CRITICAL'
+          severity: 'HIGH'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
           exit-code: 1
