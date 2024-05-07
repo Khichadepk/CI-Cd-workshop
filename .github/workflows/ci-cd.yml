@@ -30,7 +30,7 @@ jobs:
         with:
           scan-type: 'fs'
           ignore-unfixed: true
-          severity: 'HIGH'
+          severity: 'CRITICAL,HIGH'
           format: 'table' # Output format (optional)
           output: 'trivy-report.txt'
 
