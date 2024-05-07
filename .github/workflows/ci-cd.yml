@@ -68,6 +68,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_FILE_UPLOAD: trivy-report.txt
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          text: "Here is the uploaded file"
 
       - name: 'Exit if vulnerability'
         if: steps.trivy.outcome == 'failure'
