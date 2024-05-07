@@ -69,11 +69,10 @@ jobs:
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
       - name: 'Exit if vulnerability'
+        if: steps.trivy.outcome == 'failure'
         run: |
-          if [[ steps.trivy.outcome == 'failure' ]]; then
-            echo "vulnerability found in code."
             exit 1
-          fi
+
 
       - name: Extract Vulnerability Count
         run: |
