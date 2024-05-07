@@ -72,6 +72,7 @@ jobs:
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_LINK_NAMES : true
           SLACK_MSG_AUTHOR: 'Poonam K'
+          SLACK_CUSTOM_PAYLOAD: '{"text": "Hello, World!"}'
 
       - name: 'Exit if vulnerability'
         if: steps.trivy.outcome == 'failure'
