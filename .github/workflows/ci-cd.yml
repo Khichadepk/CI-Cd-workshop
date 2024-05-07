@@ -30,7 +30,7 @@ jobs:
         with:
           scan-type: 'fs'
           ignore-unfixed: true
-          severity: 'CRITICAL'
+          severity: 'High'
           format: 'table' # Output format (optional)
 
       -
