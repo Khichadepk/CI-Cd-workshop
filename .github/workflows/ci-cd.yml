@@ -46,6 +46,7 @@ jobs:
           severity: 'CRITICAL'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
+          exit-code: 1
 
       - name: Dump job context
         env:
