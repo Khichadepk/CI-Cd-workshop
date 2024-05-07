@@ -71,6 +71,7 @@ jobs:
           SLACK_FILE_UPLOAD: trivy-report.txt
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_LINK_NAMES : true
+          SLACK_MSG_AUTHOR: 'Poonam K'
 
       - name: 'Exit if vulnerability'
         if: steps.trivy.outcome == 'failure'
