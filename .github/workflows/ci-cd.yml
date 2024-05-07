@@ -47,6 +47,11 @@ jobs:
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
 
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+        
       - name: Extract Vulnerability Count
         run: |
           echo ${{ steps.trivy.outputs }}
