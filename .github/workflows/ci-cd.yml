@@ -47,7 +47,7 @@ jobs:
           severity: 'HIGH'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
-         
+          exit-code: 1
         
       - name: Dump steps context
         env:
@@ -61,7 +61,7 @@ jobs:
           
           
       - name: Slack Notification
-        if: github.ref == 'refs/heads/main1'
+        if: steps.trivy.outcome == 'failure'
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: test-submission
@@ -73,7 +73,7 @@ jobs:
 
       - name: 'Exit if vulnerability'
         run: |
-          if [[ 1 == 2 ]]; then
+          if [[ steps.trivy.outcome == 'failure' ]]; then
             echo "vulnerability found in code."
             exit 1
           fi
