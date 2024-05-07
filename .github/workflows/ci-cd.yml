@@ -41,13 +41,14 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         id: trivy
+        continue-on-error: true
         with:
           scan-type: 'fs'
           severity: 'HIGH'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
           exit-code: 1
-          continue-on-error: true
+          
 
       - name: Dump job context
         env:
