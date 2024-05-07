@@ -45,7 +45,7 @@ jobs:
           scan-type: 'fs'
           severity: 'CRITICAL'
           format: 'table' # Output format (optional)
-          output : 'trivy-report.txt'
+         
 
       - name: Dump steps context
         env:
