@@ -32,7 +32,7 @@ jobs:
           ignore-unfixed: true
           severity: 'HIGH'
           format: 'table' # Output format (optional)
-          
+          output : 'trivy-report.txt'
 
       -
         name: Set up QEMU
