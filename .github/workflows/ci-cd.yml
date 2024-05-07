@@ -54,10 +54,7 @@ jobs:
           STEPS_CONTEXT: ${{ toJson(steps) }}
         run: echo "$STEPS_CONTEXT"
         
-      - name: Extract Vulnerability Count
-        run: |
-          echo ${{ steps.trivy.outcome }}
-          exit 1;
+    
           
           
       - name: Slack Notification
@@ -77,7 +74,12 @@ jobs:
             echo "vulnerability found in code."
             exit 1
           fi
-          
+
+      - name: Extract Vulnerability Count
+        run: |
+          echo ${{ steps.trivy.outcome }}
+          exit 1;
+      
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
