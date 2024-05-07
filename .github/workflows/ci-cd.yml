@@ -58,6 +58,13 @@ jobs:
           SLACK_FILE_UPLOAD: trivy-report.txt
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
+      - name: 'Exit if vulnerability'
+        run: |
+          if [[ "github.ref == 'refs/heads/main' ]]; then
+            echo "vulnerability found in code."
+            exit 1
+          fi
+          
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
