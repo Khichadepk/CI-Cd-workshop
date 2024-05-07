@@ -72,7 +72,7 @@ jobs:
           for tag in ${TAGS}; do
             images+="${tag}@${DIGEST} "
           done
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${images}
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY https://hub.docker.com/layers/poonamkhichade720/app/latest1/images/sha256-b0a54a59a00deb78ee342c15e3218dc807e2101f976634c82e9631d3c59ce2d8?context=repo
         env:
           TAGS: latest1
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
