@@ -27,13 +27,17 @@ jobs:
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
+        id: trivy
         with:
           scan-type: 'fs'
           ignore-unfixed: true
           severity: 'HIGH'
           format: 'table' # Output format (optional)
-          output : 'trivy-report.txt'
+         
 
+      - name: Save Trivy Scan Results
+        run: echo "${{ steps.trivy.outputs.scan-results }}" > trivy_scan_results.json
+        
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
