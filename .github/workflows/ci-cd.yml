@@ -47,11 +47,16 @@ jobs:
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
      
-      - name: The demo step has failed
-        if: ${{ success() }}
-        run: echo failed
-             exit 1
-       
+      - name: 'Check scan output'
+        run: |
+          if [[ 1 == 2 ]];
+          then
+            echo "No vulnerability found in scan."
+          else 
+            echo "vulnerability found in scan"
+            exit 1
+          fi
+
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
