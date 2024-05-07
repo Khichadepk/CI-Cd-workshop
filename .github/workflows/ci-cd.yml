@@ -60,13 +60,14 @@ jobs:
       - name: Slack Notification
         if: steps.trivy.outcome == 'failure'
         uses: rtCamp/action-slack-notify@v2
+        with:
+          text: 'Here is the uploaded file'
         env:
           SLACK_CHANNEL: test-submission
           SLACK_TITLE: "*Scan failed - Poonam*"
           SLACK_MESSAGE: 'Failed trivy scan, see uploaded report'
           SLACK_USERNAME: Poonam Khichade
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_TEXT: 'Here is the uploaded file'
           SLACK_FILE_UPLOAD: trivy-report.txt
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
