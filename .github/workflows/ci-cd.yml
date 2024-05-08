@@ -77,12 +77,7 @@ jobs:
         run: |
             exit 1
 
-
-      - name: Extract Vulnerability Count
-        run: |
-          echo ${{ steps.trivy.outcome }}
-          exit 1;
-      
+     
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -103,7 +98,18 @@ jobs:
           push: true
           tags: poonamkhichade720/app:latest
 
-      
+      - name: Sign image with a key1
+        run: |
+          images=""
+          for tag in ${TAGS}; do
+            images+="${tag}@${DIGEST} "
+          done
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${images}
+        env:
+          TAGS: latest1
+          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+          DIGEST: ${{ steps.build-and-push.outputs.digest }}
 
       
             
