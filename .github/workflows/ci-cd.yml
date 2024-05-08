@@ -11,6 +11,7 @@ jobs:
   security_scan:
     name: Security Scan
     runs-on: ubuntu-latest
+    if: github.repository == 'test'
     permissions:
       contents: read
       packages: write
