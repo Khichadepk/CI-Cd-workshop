@@ -104,7 +104,7 @@ jobs:
           push: true
           tags: poonamkhichade720/app:latest
 
-      - name: Sign image with a key1
+      - name: Sign image with a key
         run: |
          cosign sign --yes --key env://COSIGN_PRIVATE_KEY poonamkhichade720/app@${DIGEST}
         env:
