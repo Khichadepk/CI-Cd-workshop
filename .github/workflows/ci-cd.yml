@@ -9,7 +9,7 @@ on:
 
 jobs:
   security_scan:
-    name: GITHUB CICD JOB
+    name: GITHUB CICD JOB1
     runs-on: ubuntu-latest
     if: ${{ ! startsWith(github.event.head_commit.message, '#NORUN') }}  # do not run the job if commit message starts with #NORUN
 
