@@ -11,7 +11,7 @@ jobs:
   security_scan:
     name: Security Scan
     runs-on: ubuntu-latest
-    if: github.repository == 'test'
+  #  if: github.repository == 'test'
     permissions:
       contents: read
       packages: write
@@ -31,7 +31,7 @@ jobs:
         run: echo ABC  $GITHUB_WORKSPACE  
         
       - name: Check workspace
-        run: echo XYZ ${{ github.sha }}
+        run: echo XYZ ${{ github.event.head_commit.message }}
 
         
       - name: Set up Go
