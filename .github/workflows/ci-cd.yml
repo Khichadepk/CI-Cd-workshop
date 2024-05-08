@@ -60,17 +60,24 @@ jobs:
       - name: Slack Notification
         if: steps.trivy.outcome == 'failure'
         uses: rtCamp/action-slack-notify@v2
-       
         env:
           SLACK_CHANNEL: test-submission
           SLACK_TITLE: "*Scan failed - Poonam*"
           SLACK_MESSAGE: 'Failed trivy scan, see uploaded report'
           SLACK_USERNAME: Poonam Khichade
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_FILE_UPLOAD: trivy-report.txt
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          SLACK_INITIAL_COMMENT: 'Scan report by Poonam'
 
+      - name: Slack upload file
+        if: steps.trivy.outcome == 'failure'
+        uses: MeilCli/slack-upload-file@v4
+        with:
+          slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          file_path: 'trivy-report.txt'
+          initial_comment: 'Scan report by Poonam'
+         
+          
       - name: 'Exit if vulnerability'
         if: steps.trivy.outcome == 'failure'
         run: |
