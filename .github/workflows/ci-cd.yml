@@ -30,7 +30,7 @@ jobs:
         run: echo ABC  $GITHUB_WORKSPACE  
         
       - name: Check workspace
-        run: echo XYZ ${{ github.repository }}
+        run: echo XYZ ${{ github.sha }}
 
         
       - name: Set up Go
@@ -102,7 +102,7 @@ jobs:
         id: build-and-push
         with:
           push: true
-          tags: poonamkhichade720/app:latest
+          tags: poonamkhichade720/app:${{ github.sha }}
 
       - name: Sign image with a key
         run: |
