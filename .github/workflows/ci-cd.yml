@@ -123,11 +123,4 @@ jobs:
           SLACK_TITLE: "*Image build and Signed*"
           SLACK_USERNAME: Poonam Khichade
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-		  
-		  
-            
-        
-          
-             
-          
-        
+
