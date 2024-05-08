@@ -9,9 +9,9 @@ on:
 
 jobs:
   security_scan:
-    name: Security Scan1
+    name: GITHUB CICD JOB
     runs-on: ubuntu-latest
-    if: ${{ ! startsWith(github.event.head_commit.message, '#NORUN') }}
+    if: ${{ ! startsWith(github.event.head_commit.message, '#NORUN') }}  # do not run the job if commit message starts with #NORUN
 
     permissions:
       contents: read
@@ -52,7 +52,7 @@ jobs:
     
           
           
-      - name: Slack Notification
+      - name: Slack Failure Notification
         if: steps.trivy.outcome == 'failure'
         uses: rtCamp/action-slack-notify@v2
         env:
@@ -63,7 +63,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
-      - name: Slack upload file
+      - name: Slack upload scan report
         if: steps.trivy.outcome == 'failure'
         uses: MeilCli/slack-upload-file@v4
         with:
@@ -71,22 +71,19 @@ jobs:
           channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
           file_path: 'trivy-report.txt'
           initial_comment: 'Scan report by ${{ secrets.SLACK_USERNAME }}'
-         
           
-      - name: 'Exit if vulnerability'
+      - name: Exit workflow if vulnerability found
         if: steps.trivy.outcome == 'failure'
         run: |
             exit 1
-
-     
-      -
-        name: Set up QEMU
+      
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-      -
-        name: Set up Docker Buildx
+      
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      -
-        name: Login to Docker Hub
+      
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
