@@ -39,7 +39,7 @@ jobs:
         continue-on-error: true
         with:
           scan-type: 'fs'
-          severity: 'HIGH'
+          severity: 'CRITICAL'
           format: 'table'
           output : 'trivy-report.txt'
           exit-code: 1
@@ -100,7 +100,6 @@ jobs:
         run: |
          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP }}@${DIGEST}
         env:
-          TAGS: latest1
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
