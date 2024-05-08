@@ -60,8 +60,7 @@ jobs:
       - name: Slack Notification
         if: steps.trivy.outcome == 'failure'
         uses: rtCamp/action-slack-notify@v2
-        with:
-          text: 'Here is the uploaded file'
+       
         env:
           SLACK_CHANNEL: test-submission
           SLACK_TITLE: "*Scan failed - Poonam*"
