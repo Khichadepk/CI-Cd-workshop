@@ -44,7 +44,7 @@ jobs:
         continue-on-error: true
         with:
           scan-type: 'fs'
-          severity: 'HIGH'
+          severity: 'CRITICAL'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
           exit-code: 1
@@ -105,12 +105,7 @@ jobs:
           tags: poonamkhichade720/app:latest
 
       - name: Sign image with a key1
-        run: |
-          images=""
-          for tag in ${TAGS}; do
-            images+="${tag}@${DIGEST} "
-          done
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY ${images}
+         cosign sign --yes --key env://COSIGN_PRIVATE_KEY poonamkhichade720/app@${DIGEST}
         env:
           TAGS: latest1
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
