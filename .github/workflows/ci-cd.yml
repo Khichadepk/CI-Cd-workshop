@@ -28,13 +28,6 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2.1.0
         
-      - name: Check path
-        run: echo ABC  $GITHUB_WORKSPACE  
-        
-      - name: Check workspace
-        run: echo XYZ ${{ github.event.head_commit.message }}
-
-        
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
@@ -46,16 +39,16 @@ jobs:
         continue-on-error: true
         with:
           scan-type: 'fs'
-          severity: 'CRITICAL'
+          severity: 'HIGH'
           format: 'table' # Output format (optional)
           output : 'trivy-report.txt'
           exit-code: 1
-        
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-        
+
+      # Dump the steps context to debug   
+      #- name: Dump steps context
+      #  env:
+      #    STEPS_CONTEXT: ${{ toJson(steps) }}
+      #  run: echo "$STEPS_CONTEXT"
     
           
           
@@ -63,10 +56,10 @@ jobs:
         if: steps.trivy.outcome == 'failure'
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_CHANNEL: test-submission
-          SLACK_TITLE: "*Scan failed - Poonam*"
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL_NAME }}
+          SLACK_TITLE: "*Scan failed - ${{ secrets.SLACK_USERNAME }}*"
           SLACK_MESSAGE: 'Failed trivy scan, see uploaded report'
-          SLACK_USERNAME: Poonam Khichade
+          SLACK_USERNAME: ${{ secrets.USERNAME }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
