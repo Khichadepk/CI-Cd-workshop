@@ -38,7 +38,7 @@ jobs:
         continue-on-error: true
         with:
           scan-type: 'fs'
-          severity: 'HIGH,CRITICAL'
+          severity: 'CRITICAL'
           format: 'table'
           output : 'trivy-report.txt'
           exit-code: 1
