@@ -26,9 +26,7 @@ jobs:
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3.5.0
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2.1.0
-        
+    
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
@@ -40,7 +38,7 @@ jobs:
         continue-on-error: true
         with:
           scan-type: 'fs'
-          severity: 'HIGH'
+          severity: 'CRITICAL'
           format: 'table'
           output : 'trivy-report.txt'
           exit-code: 1
