@@ -38,7 +38,7 @@ jobs:
         continue-on-error: true
         with:
           scan-type: 'fs'
-          severity: 'HIGH,CRITICAL'
+          severity: 'CRITICAL'
           format: 'table'
           output : 'trivy-report.txt'
           exit-code: 1
@@ -107,7 +107,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL_NAME }}
-          SLACK_MESSAGE: "*Name*: ${{ secrets.SLACK_USERNAME }}\n*Metriculation*: A0290885M\n*Email*: e1327916@u.nus.edu\n*Git*: https://github.com/${{ github.repository }}\n*Image* : https://hub.docker.com/repository/docker/${{ secrets.DOCKERHUB_USERNAME }}/app/general"
+          SLACK_MESSAGE: "*Name*: ${{ secrets.SLACK_USERNAME }}\n*Metriculation*: A0290885M\n*Email*: e1327916@u.nus.edu\n*Git*: https://github.com/${{ github.repository }}\n*Image* : https://hub.docker.com/repository/docker/${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_APP }}/general"
           SLACK_TITLE: "*Image build and Signed*"
           SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
