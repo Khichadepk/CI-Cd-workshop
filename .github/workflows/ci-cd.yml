@@ -43,7 +43,7 @@ jobs:
           output : 'trivy-report.txt'
           exit-code: 1
 
-      # Dump the steps context to debug   
+      # Dump the steps context to debug 
       #- name: Dump steps context
       #  env:
       #    STEPS_CONTEXT: ${{ toJson(steps) }}
